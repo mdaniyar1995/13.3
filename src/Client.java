@@ -9,10 +9,11 @@ class Client implements Runnable {
     Socket socket;
     Scanner in;
     PrintStream out;
+    ChatServer chatServer;
 
-    public Client(Socket socket) {
+    public Client(Socket socket, ChatServer chatServer) {
         this.socket = socket;
-
+        this.chatServer = chatServer;
         new Thread(this).start();
     }
 
@@ -23,16 +24,16 @@ class Client implements Runnable {
 
     public void run() {
         try {
-            // new branchdgdgdgd
+
             InputStream is = socket.getInputStream();
             OutputStream os = socket.getOutputStream();
             in = new Scanner(is);
             out = new PrintStream(os);
             out.println("Welcome to chat!");
             String input = in.nextLine();
+
             while (!input.equals("bye")) {
-                out.println(input + "-" + input + "-" +
-                        input.substring(input.length() / 2) + "...");
+                chatServer.sendAll(input);
                 input = in.nextLine();
             }
             socket.close();
