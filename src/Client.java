@@ -23,15 +23,10 @@ class Client implements Runnable {
 
     public void run() {
         try {
-
             InputStream is = socket.getInputStream();
             OutputStream os = socket.getOutputStream();
-
-
             in = new Scanner(is);
             out = new PrintStream(os);
-
-
             out.println("Welcome to chat!");
             String input = in.nextLine();
             while (!input.equals("bye")) {
